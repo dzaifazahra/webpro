@@ -1,73 +1,58 @@
-<?php
-session_start();
-
-header("Cache-Control: no-cache, no-store, must-revalidate");
-header("Pragma: no-cache");
-header("Expires: 0");
-?>
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Login TransiStok</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Transistock</title>
 
-    <style>
-        body{
-            font-family: Arial;
-            background: #f4f4f4;
-        }
-
-        .login-box{
-            width: 350px;
-            background: white;
-            padding: 30px;
-            margin: 100px auto;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.2);
-        }
-
-        input{
-            width: 93%;
-            padding: 10px;
-            margin-top: 10px;
-        }
-
-        button{
-            width: 100%;
-            padding: 10px;
-            margin-top: 15px;
-            background: royalblue;
-            border: none;
-            color: white;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        h2{
-            text-align: center;
-        }
-    </style>
+    <link rel="stylesheet" href="login.css">
 </head>
 <body>
 
-<div class="login-box">
-    <h2>LOGIN TRANSISTOK</h2>
+<div class="login-card">
+
+    <div class="logo">
+        <h1>Transistock</h1>
+        <p>Sistem Manajemen Inventaris</p>
+    </div>
 
     <form action="proses_login.php" method="POST">
 
-        <input type="text" name="username" placeholder="Username" required>
+        <div class="form-group">
+            <label>Email</label>
 
-        <input type="password" name="password" placeholder="Password" required>
+            <input
+                type="email"
+                name="email"
+                placeholder="Masukkan email"
+                required>
+        </div>
 
-        <button type="submit">LOGIN</button>
+        <div class="form-group">
+            <label>Password</label>
+
+            <input
+                type="password"
+                name="password"
+                placeholder="Masukkan password"
+                required>
+        </div>
+
+        <button
+            type="submit"
+            class="btn-login">
+
+            Masuk
+
+        </button>
 
     </form>
+
+    <div class="footer">
+        © 2026 Transistock
+    </div>
+
 </div>
-<script>
-history.pushState(null, null, location.href);
-window.onpopstate = function () {
-    history.go(1);
-};
-</script>
+
 </body>
 </html>

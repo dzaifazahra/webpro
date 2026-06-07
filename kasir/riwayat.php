@@ -1,148 +1,200 @@
 <?php
-include '../auth/cek_login.php';
-include '../koneksi.php';
+session_start();
 
-if ($_SESSION['role'] != 'kasir') {
+if (!isset($_SESSION['role'])) {
     header("Location: ../auth/login.php");
     exit;
 }
 
-$transaksi = mysqli_query($conn,
-             "SELECT * FROM transaksi
-              ORDER BY id DESC");
+include '../config/koneksi.php';
 
-$totalPemasukan = mysqli_query($conn,
-                  "SELECT SUM(total_harga)
-                   AS total FROM transaksi");
-
-$total = mysqli_fetch_assoc($totalPemasukan);
+$data = mysqli_query($conn,"
+    SELECT *
+    FROM transaksi
+    ORDER BY tanggal DESC
+");
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>Riwayat Transaksi</title>
 
-    <style>
-
-        body{
-            font-family: Arial;
-            background: #f4f4f4;
-            padding: 20px;
-        }
-
-        .container{
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-        }
-
-        table{
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
-
-        table, th, td{
-            border: 1px solid #ddd;
-        }
-
-        th, td{
-            padding: 10px;
-            text-align: center;
-        }
-
-        th{
-            background: royalblue;
-            color: white;
-        }
-
-        .total{
-            background: green;
-            color: white;
-            padding: 15px;
-            border-radius: 10px;
-            margin-bottom: 20px;
-            font-size: 20px;
-        }
-
-        .nav{
-    margin-bottom: 20px;
-}
-
-.nav a{
-    text-decoration: none;
-    padding: 10px 15px;
-    background: royalblue;
-    color: white;
-    border-radius: 5px;
-    margin-right: 10px;
-}
-
-.logout{
-    background: crimson !important;
-}
-
-    </style>
+    <link rel="stylesheet" href="../admin/dashboard.css">
 </head>
 <body>
 
 <div class="container">
-    <h2>Riwayat Transaksi</h2>
-<div class="nav">
 
-    <a href="transaksi.php">
-        Transaksi
-    </a>
+    <div class="sidebar">
 
-    <a class="logout"
-       href="../auth/logout.php">
-        Logout
-    </a>
+        <h2>Transistock</h2>
 
-</div>
+        <ul>
 
-    
+            <li>
+                <a href="dashboard_kasir.php">
+                    Dashboard
+                </a>
+            </li>
 
-    <div class="total">
+            <li>
+                <a href="penjualan.php">
+                    Penjualan
+                </a>
+            </li>
 
-        Total Pemasukan :
-        <b>
-            Rp <?= number_format($total['total']); ?>
-        </b>
+            <li class="active">
+                Riwayat
+            </li>
+
+            <li>
+                <a href="pengaturan.php">
+                    Pengaturan
+                </a>
+            </li>
+
+            <li>
+                <a href="../auth/logout.php">
+                    Logout
+                </a>
+            </li>
+
+        </ul>
 
     </div>
 
-    
+    <div class="main">
 
-    <table>
+        <div class="header">
 
-        <tr>
-            <th>Kode</th>
-            <th>Kasir</th>
-            <th>Total</th>
-            <th>Tanggal</th>
-        </tr>
+            <input
+                type="text"
+                placeholder="Cari transaksi...">
 
-        <?php while($row = mysqli_fetch_assoc($transaksi)){ ?>
+            <div class="profile">
+                <h4><?= $_SESSION['nama']; ?></h4>
+                <p>Kasir</p>
+            </div>
 
-        <tr>
+        </div>
 
-            <td><?= $row['kode_transaksi']; ?></td>
+        <div class="inventory-card">
 
-            <td><?= $row['kasir']; ?></td>
+            <div class="inventory-top">
 
-            <td>
-                Rp <?= number_format($row['total_harga']); ?>
-            </td>
+                <div>
+                    <h2>Riwayat Transaksi</h2>
+                    <p>Daftar seluruh transaksi penjualan.</p>
+                </div>
 
-            <td><?= $row['created_at']; ?></td>
+            </div>
 
-        </tr>
+            <table class="inventory-table">
 
-        <?php } ?>
+                <thead>
 
-    </table>
+                    <tr>
+                        <th>No</th>
+                        <th>Tanggal</th>
+                        <th>Total</th>
+                        <th>Metode</th>
+                        <th>Status</th>
+                        <th>Aksi</th>
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                <?php $no = 1; ?>
+
+                <?php while($row = mysqli_fetch_assoc($data)) : ?>
+
+                <tr>
+
+                    <td><?= $no++; ?></td>
+
+                    <td>
+                        <?= $row['tanggal']; ?>
+                    </td>
+
+                    <td>
+                        Rp <?= number_format($row['total'],0,',','.'); ?>
+                    </td>
+
+                    <td>
+                        <?= $row['metode_pembayaran']; ?>
+                    </td>
+
+                    <td>
+
+                       <?php
+
+if($row['status'] == 'SELESAI'){
+    $warna = '#d4f5df';
+    $text = '#16a34a';
+}
+elseif($row['status'] == 'DIPROSES'){
+    $warna = '#fff4cc';
+    $text = '#ca8a04';
+}
+else{
+    $warna = '#ffe0e0';
+    $text = '#dc2626';
+}
+
+?>
+
+<span
+style="
+background:<?= $warna ?>;
+color:<?= $text ?>;
+padding:8px 14px;
+border-radius:20px;
+font-weight:600;
+">
+
+<?= $row['status']; ?>
+
+</span>
+
+                    </td>
+
+         <td>
+
+    <a
+        href="detail_transaksi.php?id=<?= $row['id_transaksi']; ?>"
+        class="action-edit">
+        Detail
+    </a>
+
+    <a
+        href="edit_transaksi.php?id=<?= $row['id_transaksi']; ?>"
+        class="action-stock">
+        Edit
+    </a>
+
+    <a
+        href="hapus_transaksi.php?id=<?= $row['id_transaksi']; ?>"
+        class="action-delete"
+        onclick="return confirm('Hapus transaksi ini?')">
+        Hapus
+    </a>
+
+</td>
+                </tr>
+
+                <?php endwhile; ?>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
 
 </div>
 

@@ -1,44 +1,35 @@
 <?php
-
 session_start();
-include '../koneksi.php';
+include "../config/koneksi.php";
 
-$username = $_POST['username'];
-$password = MD5($_POST['password']);
+$email = $_POST['email'];
+$password = $_POST['password'];
 
-$query = mysqli_query($conn, "SELECT * FROM users WHERE username='$username' AND password='$password'");
+$query = mysqli_query($conn,
+    "SELECT * FROM users
+     WHERE email='$email'
+     AND password='$password'"
+);
 
 $data = mysqli_fetch_assoc($query);
 
-if ($data) {
+if($data){
 
-    $_SESSION['login'] = true;
-    $_SESSION['id'] = $data['id'];
+    $_SESSION['id_user'] = $data['id_user'];
     $_SESSION['nama'] = $data['nama'];
-    $_SESSION['username'] = $data['username'];
     $_SESSION['role'] = $data['role'];
-    mysqli_query($conn,
-    "UPDATE users SET last_login = NOW() WHERE id = '".$data['id']."'");
 
-    if ($data['role'] == 'admin') {
-        header("Location: ../admin/user.php");
+    if($data['role'] == 'admin'){
+        header("Location: ../admin/dashboard.php");
+    }
+    elseif($data['role'] == 'manager'){
+        header("Location: ../manager/dashboard_manager.php");
+    }
+    elseif($data['role'] == 'kasir'){
+        header("Location: ../kasir/dashboard_kasir.php");
     }
 
-    elseif ($data['role'] == 'kasir') {
-        header("Location: ../kasir/transaksi.php");
-    }
-
-    elseif ($data['role'] == 'manager') {
-        header("Location: ../manager/barang.php");
-    }
-
-} else {
-
-    echo "
-    <script>
-        alert('Username atau Password salah!');
-        window.location='login.php';
-    </script>
-    ";
+}else{
+    echo "Login gagal";
 }
 ?>
