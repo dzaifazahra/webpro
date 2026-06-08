@@ -7,9 +7,10 @@ if (!isset($_SESSION['role'])) {
 }
 
 include '../config/koneksi.php';
-
-$data = mysqli_query($conn, "
-    SELECT barang.*, kategori.nama_kategori
+$data = mysqli_query($conn,"
+    SELECT
+        barang.*,
+        kategori.nama_kategori
     FROM barang
     LEFT JOIN kategori
     ON barang.id_kategori = kategori.id_kategori
@@ -92,27 +93,48 @@ $data = mysqli_query($conn, "
             <table class="inventory-table">
 
                 <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>   </th>
-                        <th>Nama Barang</th>
-                        <th>Kategori</th>
-                        <th>SKU</th>
-                        <th>Stok</th>
-                        <th>Harga</th>
-                        <th>Aksi</th>
-                    </tr>
+                   <tr>
+    <th>No</th>
+    <th>   </th>
+    <th>Nama Barang</th>
+    <th>Kategori</th>
+    <th>SKU</th>
+    <th>Stok</th>
+    <th>Status</th>
+    <th>Harga</th>
+    <th>Aksi</th>
+</tr>
                 </thead>
 
                 <tbody>
 
                 <?php $no = 1; ?>
 
-                <?php while($row = mysqli_fetch_assoc($data)) : ?>
+             <?php while($row = mysqli_fetch_assoc($data)) : ?>
 
-               <tr>
+<?php
 
-    <td><?= $no++; ?></td>
+if($row['stok'] > 10){
+    $status = "AMAN";
+    $warna = "#dcfce7";
+    $text = "#16a34a";
+}
+elseif($row['stok'] > 0){
+    $status = "MENIPIS";
+    $warna = "#fef3c7";
+    $text = "#d97706";
+}
+else{
+    $status = "HABIS";
+    $warna = "#fee2e2";
+    $text = "#dc2626";
+}
+
+?>
+
+<tr>
+
+<td><?= $no++; ?></td>
 
     <td>
         <img
@@ -122,26 +144,33 @@ $data = mysqli_query($conn, "
             style="object-fit:cover; border-radius:10px;">
     </td>
 
-    <td><?= $row['nama_barang']; ?></td>
+   <td><?= $row['nama_barang']; ?></td>
 
-    <td>
-        <span class="stock-badge">
-            <?= $row['nama_kategori']; ?>
-        </span>
-    </td>
+<td><?= $row['nama_kategori']; ?></td>
 
-    <td><?= $row['sku']; ?></td>
+<td><?= $row['sku']; ?></td>
 
-    <td>
-        <span class="stock-badge">
-            <?= $row['stok']; ?>
-        </span>
-    </td>
+<td><?= $row['stok']; ?></td>
 
-    <td>
-        Rp <?= number_format($row['harga_jual'],0,',','.'); ?>
-    </td>
+<td>
 
+<span
+style="
+background:<?= $warna ?>;
+color:<?= $text ?>;
+padding:10px 14px;
+border-radius:10px;
+font-size:14px;
+font-weight:500;
+">
+<?= $status ?>
+</span>
+
+</td>
+
+<td>
+Rp <?= number_format($row['harga_jual'],0,',','.'); ?>
+</td>
     <td>
 
         <a href="edit_barang.php?id=<?= $row['id_barang']; ?>" class="action-edit">
