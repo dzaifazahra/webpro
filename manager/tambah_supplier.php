@@ -27,7 +27,7 @@ $alamat = $_POST['alamat'];
         (
             '$nama_supplier',
             '$telepon',
-            $email,
+            '$email',
             '$alamat'
         )
     ");

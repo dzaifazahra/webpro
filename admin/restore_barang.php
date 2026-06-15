@@ -7,9 +7,11 @@ $id = $_GET['id'];
 mysqli_query(
     $conn,
     "UPDATE barang
-     SET status='nonaktif'
+     SET status='aktif'
      WHERE id_barang='$id'"
 );
 
-header("Location: inventaris.php");
+header("Location: barang_nonaktif.php");
 exit;
+
+?>

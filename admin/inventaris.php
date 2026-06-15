@@ -14,6 +14,7 @@ $data = mysqli_query($conn,"
     FROM barang
     LEFT JOIN kategori
     ON barang.id_kategori = kategori.id_kategori
+    WHERE barang.status = 'aktif'
 ");
 ?>
 

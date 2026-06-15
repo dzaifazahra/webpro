@@ -48,11 +48,33 @@ if($_FILES['foto']['name'] != ''){
 ");
 
     if($query){
-        header("Location: inventaris.php");
-        exit;
-    }else{
-        echo "Gagal menyimpan data";
-    }
+
+    $id_barang = mysqli_insert_id($conn);
+
+    mysqli_query($conn,"
+        INSERT INTO barang_masuk
+        (
+            tanggal_masuk,
+            id_supplier,
+            status,
+            catatan,
+            id_barang,
+            jumlah
+        )
+        VALUES
+        (
+            CURDATE(),
+            1,
+            'SELESAI',
+            'Tambah Barang Baru',
+            '$id_barang',
+            '$stok'
+        )
+    ");
+
+    header("Location: inventaris.php");
+    exit;
+}
 }
 ?>
 
