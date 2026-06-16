@@ -119,13 +119,19 @@ if(isset($_POST['simpan'])){
             </li>
 
             <li>
+                <a href="meja.php">
+                    Manajemen Meja
+                </a>
+            </li>
+
+            <li>
                 <a href="riwayat.php">
                     Riwayat
                 </a>
             </li>
 
             <li>
-                <a href="pengaturan.php">
+                <a href="pengaturan_kasir.php">
                     Pengaturan
                 </a>
             </li>
@@ -181,6 +187,30 @@ if(isset($_POST['simpan'])){
         Cari
 
     </button>
+
+    <label>Meja</label>
+
+    <select name="id_meja">
+
+<?php
+
+    $meja = mysqli_query($conn,"
+    SELECT *
+    FROM meja
+    WHERE status != 'DITEMPATI'");
+
+    while($m=mysqli_fetch_assoc($meja)){
+
+?>
+
+        <option value="<?= $m['id_meja']; ?>">
+        <?= $m['nomor_meja']; ?>
+        (<?= $m['status']; ?>)
+    </option>
+
+<?php } ?>
+
+</select>
 
 </form>
 
