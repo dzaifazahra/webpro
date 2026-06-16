@@ -78,6 +78,12 @@ if(isset($_POST['simpan'])){
             </li>
 
             <li>
+                <a href="meja.php">
+                    Manajemen Meja
+                </a>
+            </li>
+
+            <li>
                 <a href="riwayat.php">
                     Riwayat
                 </a>
