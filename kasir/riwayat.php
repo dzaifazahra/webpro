@@ -45,12 +45,18 @@ $data = mysqli_query($conn,"
                 </a>
             </li>
 
+             <li>
+                <a href="meja.php">
+                    Manajemen Meja
+                </a>
+            </li>
+
             <li class="active">
                 Riwayat
             </li>
 
             <li>
-                <a href="pengaturan.php">
+                <a href="pengaturan_kasir.php">
                     Pengaturan
                 </a>
             </li>
