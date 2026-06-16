@@ -70,13 +70,19 @@ $barangTerjual = mysqli_fetch_assoc($queryBarangTerjual);
         </li>
 
         <li>
+            <a href="meja.php">
+                Manajemen Meja
+            </a>
+        </li>
+
+        <li>
             <a href="riwayat.php">
                 Riwayat
             </a>
         </li>
 
         <li>
-            <a href="pengaturan.php">
+            <a href="pengaturan_kasir.php">
                 Pengaturan
             </a>
         </li>
