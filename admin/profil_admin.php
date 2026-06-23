@@ -51,7 +51,7 @@ $data = mysqli_fetch_assoc(
 
 <li>
 <a href="riwayat_barang_masuk.php">
-Riwayat Barang Masuk
+Riwayat Stok
 </a>
 </li>
 

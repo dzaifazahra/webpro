@@ -24,7 +24,7 @@ $data = mysqli_query($conn,"
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Riwayat Barang Masuk</title>
+    <title>Riwayat Stok</title>
 
     <link rel="stylesheet" href="dashboard.css">
 </head>
@@ -53,12 +53,11 @@ $data = mysqli_query($conn,"
             </li>
 
 
-            <li class="active">
-                <a href="riwayat_barang_masuk.php">
-                    Riwayat Barang Masuk
-                </a>
-            </li>
-
+           <li class="active">
+    <a href="riwayat_barang_masuk.php">
+        Riwayat Stok
+    </a>
+</li>
             
          <li>
     <a href="notifikasi.php">
@@ -89,7 +88,7 @@ $data = mysqli_query($conn,"
 
             <input
                 type="text"
-                placeholder="Cari riwayat barang masuk...">
+                placeholder="Cari riwayat stok...">
 
             <div class="profile">
                 <h4><?= $_SESSION['nama']; ?></h4>
@@ -103,8 +102,8 @@ $data = mysqli_query($conn,"
             <div class="inventory-top">
 
                 <div>
-                    <h2>Riwayat Barang Masuk</h2>
-                    <p>Daftar seluruh transaksi barang masuk.</p>
+                    <h2>Riwayat Stok</h2>
+                    <p>Daftar seluruh aktivitas keluar masuk barang.</p>
                 </div>
 
             </div>
@@ -114,12 +113,10 @@ $data = mysqli_query($conn,"
                 <thead>
 
                     <tr>
-                        <th>No</th>
                         <th>Tanggal</th>
-                         <th>    </th>
-                        <th>Nama Barang</th>
+                        <th>Barang</th>
+                        <th>Aktivitas</th>
                         <th>Jumlah</th>
-                        <th>Status</th>
                     </tr>
 
                 </thead>
@@ -131,36 +128,33 @@ $data = mysqli_query($conn,"
                 <?php while($row = mysqli_fetch_assoc($data)) : ?>
 
                  <tr>
+<td><?= $row['tanggal_masuk']; ?></td>
 
-    <td><?= $no++; ?></td>
+<td>
+    <div class="barang-info">
 
-    <td>
-        <?= $row['tanggal_masuk']; ?>
-    </td>
-
-    <td>
         <img
             src="../uploads/<?= $row['foto']; ?>"
-            width="60"
-            height="60"
-            style="object-fit:cover; border-radius:10px;">
-    </td>
+            class="table-photo">
 
-    <td>
-        <?= $row['nama_barang']; ?>
-    </td>
-
-    <td>
-        <span class="stock-badge">
-            +<?= $row['jumlah']; ?>
+        <span>
+            <?= $row['nama_barang']; ?>
         </span>
-    </td>
 
-    <td>
-        <span class="stock-badge">
-            <?= $row['status']; ?>
-        </span>
-    </td>
+    </div>
+</td>
+
+<td>
+    <span class="status-active">
+        🟢 Barang Masuk
+    </span>
+</td>
+
+<td>
+    <span class="stock-badge">
+        +<?= $row['jumlah']; ?>
+    </span>
+</td>
 
 </tr>
 

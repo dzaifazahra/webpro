@@ -44,7 +44,7 @@ $stokRendah = mysqli_query($conn,"
             </li>
             <li>
                 <a href="riwayat_barang_masuk.php">
-                    Riwayat Barang Masuk
+                    Riwayat Stok
                 </a>
             </li>
 

@@ -64,7 +64,7 @@ if(isset($_POST['update'])){
 </li>
 
 <li>
-    <a href="riwayat_barang_masuk.php">Riwayat Barang Masuk</a>
+    <a href="">Riwayat Stok</a>
 </li>
           <li>
     <a href="notifikasi.php">

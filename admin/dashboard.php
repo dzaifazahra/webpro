@@ -89,7 +89,7 @@ $stokRendah = mysqli_fetch_assoc($queryStokRendah);
 
             <li>
                 <a href="riwayat_barang_masuk.php">
-                    Riwayat Barang Masuk
+                    Riwayat Stok
                 </a>
             </li>
 

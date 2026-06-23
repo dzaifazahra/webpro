@@ -310,3 +310,162 @@ body{
     border-radius:12px;
 }
 
+.product-list{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(240px,1fr));
+    gap:20px;
+}
+
+.product-card{
+    background:white;
+    border-radius:18px;
+    padding:15px;
+    box-shadow:0 3px 12px rgba(0,0,0,0.08);
+
+    display:flex;
+    flex-direction:column;
+
+    text-align:left;
+}
+
+.product-card:hover{
+    transform:translateY(-5px);
+    transition:0.2s;
+}
+
+.product-image{
+    width:100%;
+    height:180px;
+    object-fit:cover;
+    border-radius:12px;
+    margin-bottom:15px;
+}
+
+.product-meta{
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    margin-top:10px;
+}
+
+.product-action{
+    margin-top:15px;
+    display:flex;
+    gap:10px;
+}
+
+.product-info{
+    flex:1;
+}
+
+.product-info h3{
+    font-size:22px;
+    margin-bottom:5px;
+}
+
+.product-detail{
+    font-size:14px;
+    color:#666;
+}
+
+.product-price{
+    font-size:24px;
+    font-weight:700;
+    margin-top:10px;
+}
+
+.product-meta{
+    display:flex;
+    justify-content:space-between;
+    margin-top:10px;
+    font-size:14px;
+}
+
+.product-footer{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:15px;
+    padding-top:12px;
+    border-top:1px solid #eee;
+}
+
+.product-status{
+    font-size:14px;
+    font-weight:600;
+}
+
+.product-action{
+    display:flex;
+    gap:8px;
+    margin-top:0;
+}
+
+.kategori-name{
+    font-weight:600;
+    font-size:16px;
+}
+
+.status-active{
+    background:#dcfce7;
+    color:#16a34a;
+    padding:8px 14px;
+    border-radius:999px;
+    font-size:13px;
+    font-weight:600;
+}
+
+.inventory-table tbody tr{
+    transition:0.2s;
+}
+
+.inventory-table tbody tr:hover{
+    background:#f8fafc;
+}
+
+.kategori-desc{
+    color:#666;
+}
+
+.action-edit,
+.action-delete{
+    padding:6px 10px;
+    font-size:13px;
+}
+
+
+.kategori-list{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:20px;
+}
+
+.kategori-list .product-card{
+    width:260px;
+    min-height:160px;
+}
+
+.kategori-image{
+    width:100%;
+    height:130px;
+    object-fit:cover;
+    border-radius:12px;
+    margin-bottom:15px;
+}
+
+.barang-info{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.barang-info span{
+    font-weight:600;
+}
+
+.table-photo{
+    width:55px;
+    height:55px;
+    object-fit:cover;
+    border-radius:12px;
+}

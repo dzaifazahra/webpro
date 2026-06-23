@@ -97,7 +97,7 @@ Barang Masuk
 <p>Kelola data barang masuk.</p>
 </div>
 
-<a href="tambah_barang_masuk.php" class="btn-add">
+<a href="tambah" class="btn-add">
 Tambah Barang Masuk
 </a>
 

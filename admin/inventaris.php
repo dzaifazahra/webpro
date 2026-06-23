@@ -48,7 +48,7 @@ $data = mysqli_query($conn,"
 </li>
 
 <li>
-    <a href="riwayat_barang_masuk.php">Riwayat Barang Masuk</a>
+    <a href="riwayat_barang_masuk.php">Riwayat Stok</a>
 </li>
             <li>
                 <a href="notifikasi.php">Notifikasi</a>
@@ -91,90 +91,55 @@ $data = mysqli_query($conn,"
                 </a>
             </div>
 
-            <table class="inventory-table">
+ <div class="product-list">
 
-                <thead>
-                   <tr>
-    <th>No</th>
-    <th>   </th>
-    <th>Nama Barang</th>
-    <th>Kategori</th>
-    <th>SKU</th>
-    <th>Stok</th>
-    <th>Status</th>
-    <th>Harga</th>
-    <th>Aksi</th>
-</tr>
-                </thead>
+<?php $no = 1; ?>
 
-                <tbody>
-
-                <?php $no = 1; ?>
-
-             <?php while($row = mysqli_fetch_assoc($data)) : ?>
+<?php while($row = mysqli_fetch_assoc($data)) : ?>
 
 <?php
 
 if($row['stok'] > 10){
-    $status = "AMAN";
-    $warna = "#dcfce7";
-    $text = "#16a34a";
+    $status = "🟢 Aman";
+    $warna = "#16a34a";
 }
 elseif($row['stok'] > 0){
-    $status = "MENIPIS";
-    $warna = "#fef3c7";
-    $text = "#d97706";
+    $status = "🟡 Menipis";
+    $warna = "#d97706";
 }
 else{
-    $status = "HABIS";
-    $warna = "#fee2e2";
-    $text = "#dc2626";
+    $status = "🔴 Habis";
+    $warna = "#dc2626";
 }
 
 ?>
 
-<tr>
+<div class="product-card">
 
-<td><?= $no++; ?></td>
+    <img
+        src="../uploads/<?= $row['foto']; ?>"
+        class="product-image">
 
-    <td>
-        <img
-            src="../uploads/<?= $row['foto']; ?>"
-            width="60"
-            height="60"
-            style="object-fit:cover; border-radius:10px;">
-    </td>
+    <div class="product-info">
 
-   <td><?= $row['nama_barang']; ?></td>
+        <h3><?= $row['nama_barang']; ?></h3>
 
-<td><?= $row['nama_kategori']; ?></td>
+        <p class="product-detail">
+            <?= $row['nama_kategori']; ?> • <?= $row['sku']; ?>
+        </p>
+  <div class="product-price">
+            Rp <?= number_format($row['harga_jual'],0,',','.'); ?>
+        </div>
 
-<td><?= $row['sku']; ?></td>
+        <div class="product-meta">
+    <span>Stok : <?= $row['stok']; ?></span>
+</div>
+<div class="product-footer">
 
-<td><?= $row['stok']; ?></td>
+    <div class="product-action">
 
-<td>
-
-<span
-style="
-background:<?= $warna ?>;
-color:<?= $text ?>;
-padding:10px 14px;
-border-radius:10px;
-font-size:14px;
-font-weight:500;
-">
-<?= $status ?>
-</span>
-
-</td>
-
-<td>
-Rp <?= number_format($row['harga_jual'],0,',','.'); ?>
-</td>
-    <td>
-
-        <a href="edit_barang.php?id=<?= $row['id_barang']; ?>" class="action-edit">
+        <a href="edit_barang.php?id=<?= $row['id_barang']; ?>"
+        class="action-edit">
             Edit
         </a>
 
@@ -184,20 +149,20 @@ Rp <?= number_format($row['harga_jual'],0,',','.'); ?>
             Hapus
         </a>
 
-        <a href="barang_masuk.php?id=<?= $row['id_barang']; ?>"
-        class="action-stock">
-            Barang Masuk
-        </a>
+    </div>
 
-    </td>
+    <span class="product-status"
+    style="color:<?= $warna ?>;">
+        <?= $status ?>
+    </span>
 
-</tr>
-                    <?php endwhile; ?>
+</div>
+</div>
+</div>
 
-                </tbody>
+<?php endwhile; ?>
 
-            </table>
-
+</div>
         </div>
 
     </div>

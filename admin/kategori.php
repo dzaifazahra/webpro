@@ -31,7 +31,7 @@ $data = mysqli_query($conn, "SELECT * FROM kategori");
                 <a href="kategori.php">Kelola Kategori</a>
             </li>
            <li>
-    <a href="riwayat_barang_masuk.php">Riwayat Barang Masuk</a>
+    <a href="riwayat_barang_masuk.php">Riwayat Stok</a>
 </li>
            
 
@@ -77,73 +77,81 @@ $data = mysqli_query($conn, "SELECT * FROM kategori");
                     + Tambah Kategori
                 </a>
             </div>
+<div class="kategori-list">
 
-            <table class="inventory-table">
+<?php while($row = mysqli_fetch_assoc($data)) : ?>
+<?php
 
-                <thead>
-                    <tr>
-                        <th>No</th>
-                        <th>Nama Kategori</th>
-                        <th>Deskripsi</th>
-                        <th>Status</th>
-                        <th>Aksi</th>
-                    </tr>
-                </thead>
+$gambar = "default.png";
 
-                <tbody>
+if($row['nama_kategori'] == "Minuman"){
+    $gambar = "minuman.png";
+}
+elseif($row['nama_kategori'] == "Makanan"){
+    $gambar = "makanan.png";
+}
+elseif($row['nama_kategori'] == "Snack"){
+    $gambar = "snack.png";
+}
+elseif($row['nama_kategori'] == "ATK"){
+    $gambar = "atk.png";
+}
 
-                <?php $no = 1; ?>
+?>
 
-                <?php while($row = mysqli_fetch_assoc($data)) : ?>
+<div class="product-card">
 
-                    <tr>
+    <div class="product-info">
 
-                        <td><?= $no++; ?></td>
+       <img
+    src="../uploads/<?= $gambar; ?>"
+    class="kategori-image">
+    <h3><?= $row['nama_kategori']; ?></h3>
 
-                        <td><?= $row['nama_kategori']; ?></td>
+        <p class="product-detail">
+            <?= $row['deskripsi']; ?>
+        </p>
 
-                        <td><?= $row['deskripsi']; ?></td>
+        <div class="product-footer">
 
-                        <td>
+            <div class="product-action">
 
-                        <?php if($row['status'] == 'AKTIF') : ?>
+                <a href="edit_kategori.php?id=<?= $row['id_kategori']; ?>"
+                class="action-edit">
+                    Edit
+                </a>
 
-                            <span class="status-active">
-                                AKTIF
-                            </span>
+                <a href="hapus_kategori.php?id=<?= $row['id_kategori']; ?>"
+                class="action-delete"
+                onclick="return confirm('Yakin ingin menghapus kategori ini?')">
+                    Hapus
+                </a>
 
-                        <?php else : ?>
+            </div>
 
-                            <span class="status-inactive">
-                                NONAKTIF
-                            </span>
+            <?php if($row['status'] == 'AKTIF') : ?>
 
-                        <?php endif; ?>
+                <span class="product-status" style="color:#16a34a;">
+                    🟢 Aktif
+                </span>
 
-                        </td>
+            <?php else : ?>
 
-                        <td>
+                <span class="product-status" style="color:#dc2626;">
+                    🔴 Nonaktif
+                </span>
 
-                            <a href="edit_kategori.php?id=<?= $row['id_kategori']; ?>"
-                            class="action-edit">
-                            Edit
-                            </a>
+            <?php endif; ?>
 
-                        <a href="hapus_kategori.php?id=<?= $row['id_kategori']; ?>"
-                        class="action-delete"
-                        onclick="return confirm('Yakin ingin menghapus kategori ini?')">
-                        Hapus
-                    </a>
-                        </td>
+        </div>
 
-                    </tr>
+    </div>
 
-                <?php endwhile; ?>
+</div>
 
-                </tbody>
+<?php endwhile; ?>
 
-            </table>
-
+</div>
         </div>
 
     </div>
